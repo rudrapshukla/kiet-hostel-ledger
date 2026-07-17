@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hostel Ledger — KIET Directory</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<nav class="nav glass">
+  <div class="brand">
+    <div class="brand-mark">K</div>
+    <div>
+      <div class="brand-name">Hostel Ledger</div>
+      <div class="brand-sub">KIET Directory</div>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" data-view="home">Search</button>
+    <button class="tab-btn" data-view="hostels">Hostels</button>
+    <button class="tab-btn" data-view="contact">Contact</button>
+  </div>
+  <button class="admin-btn" id="devToggle">Developer</button>
+</nav>
+
+<!-- HOME / SEARCH -->
+<div class="view active" id="view-home">
+  <div class="hero">
+    <span class="eyebrow">Open directory · maintained by Astra</span>
+    <h1>Find who lives <em>where</em>,<br/>in a few keystrokes.</h1>
+    <p>Search any hostel resident by name, room number, or hostel.</p>
+  </div>
+
+  <div class="search-modes" id="searchModes">
+    <button class="mode-chip active" data-mode="all">Smart search</button>
+    <button class="mode-chip" data-mode="name">By name</button>
+    <button class="mode-chip" data-mode="room">By room number</button>
+    <button class="mode-chip" data-mode="hostel">By hostel name</button>
+  </div>
+
+  <div class="search-box glass">
+    <span class="mono search-icon">⌕</span>
+    <input id="searchInput" placeholder="Try searching by name, room, or hostel" />
+    <button class="search-clear" id="clearBtn" style="display:none;">✕</button>
+  </div>
+
+  <div class="stat-row" id="statRow"></div>
+
+  <div class="section">
+    <div class="results-head"><h3>Results</h3><span id="resultCount"></span></div>
+    <div id="searchResults" class="plaque-grid"></div>
+  </div>
+</div>
+
+<!-- HOSTELS BROWSE -->
+<div class="view" id="view-hostels">
+  <div class="page-head">
+    <h2>Browse by hostel</h2>
+    <p>Pick a hostel to see every room on record and who's staying there.</p>
+  </div>
+  <div class="hostel-filter" id="hostelFilterRow"></div>
+  <div id="hostelResults" class="plaque-grid"></div>
+</div>
+
+<!-- CONTACT -->
+<div class="view" id="view-contact">
+  <div class="page-head">
+    <h2>Contact us</h2>
+    <p>Spotted a wrong room number, or want your hostel added? Reach out.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="card glass">
+      <h3>Send a message</h3>
+      <div class="field"><label>Your name</label><input id="cName" placeholder="Full name" /></div>
+      <div class="field"><label>Your email</label><input id="cEmail" placeholder="you@example.com" /></div>
+      <div class="field"><label>Message</label><textarea id="cMsg" placeholder="What would you like to tell us?"></textarea></div>
+      <button class="btn" id="cSend">Send message</button>
+      <div class="small-note">This opens your email app with the message pre-filled — nothing is sent from this page directly.</div>
+    </div>
+    <div class="card glass">
+      <h3>Directory desk</h3>
+      <div class="info-row"><div class="lbl">Email</div><div class="val">hostel.directory@kiet.edu</div></div>
+      <div class="info-row"><div class="lbl">Office</div><div class="val">Student Affairs Block, Ground Floor</div></div>
+      <div class="info-row"><div class="lbl">Hours</div><div class="val">Mon – Sat, 10:00 AM – 5:00 PM</div></div>
+      <div class="info-row"><div class="lbl">Corrections</div><div class="val">Room or name mismatches are usually fixed within a day.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- DEVELOPER CONSOLE -->
+<div class="view" id="view-dev">
+  <div id="gateBox" class="gate-wrap glass">
+    <div class="lock">🔒</div>
+    <h2>Developer console</h2>
+    <p>Enter the console passcode to manage hostels and residents.</p>
+    <div class="field" style="text-align:left;"><input id="passInput" type="password" placeholder="Passcode" /></div>
+    <button class="btn" id="unlockBtn" style="width:100%;">Unlock</button>
+    <div class="small-note" id="gateNote">If you aren't him, you shouldn't be here.</div>
+  </div>
+
+  <div id="consolePanel" style="display:none;">
+    <div class="page-head">
+      <h2>Developer console</h2>
+      <p>Additions here save immediately and appear on the public site for everyone.</p>
+      <button class="btn-ghost btn" id="logoutBtn" style="margin-top:10px;">Log out</button>
+    </div>
+
+    <div class="dev-grid">
+      <div class="card glass">
+        <h3>Add a hostel</h3>
+        <div class="field"><label>Hostel name</label><input id="newHostelName" placeholder="e.g. Hostel E" /></div>
+        <button class="btn" id="addHostelBtn">Add hostel</button>
+        <div class="divider"></div>
+        <h3>Existing hostels</h3>
+        <div class="dev-list" id="hostelDevList"></div>
+      </div>
+
+      <div class="card glass">
+        <h3>Add a resident</h3>
+        <div class="field"><label>Hostel</label><select id="entryHostelSelect"></select></div>
+        <div class="row-2">
+          <div class="field"><label>Room number</label><input id="entryRoom" placeholder="e.g. 204" /></div>
+          <div class="field"><label>Resident name</label><input id="entryName" placeholder="e.g. Priya Sharma" /></div>
+        </div>
+        <button class="btn" id="addEntryBtn">Add resident</button>
+        <div class="divider"></div>
+        <h3>All residents (<span id="entryTotal">0</span>)</h3>
+        <div class="dev-list" id="entryDevList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>Built by students, for students · KIET University, Ghaziabad</footer>
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
